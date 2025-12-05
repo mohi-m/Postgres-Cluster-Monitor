@@ -1,0 +1,51 @@
+services:
+  pgbouncer:
+    build:
+      context: ./pgbouncer
+    container_name: pgbouncer
+    ports:
+      - "6432:6432"
+    env_file:
+      - ./.env
+    volumes:
+      - ./pgbouncer/pgbouncer.ini.template:/etc/pgbouncer/pgbouncer.ini.template:ro
+      - ./pgbouncer/userlist.txt.template:/etc/pgbouncer/userlist.txt.template:ro
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - pgbouncer
+
+  locust:
+    image: locustio/locust:2.15.0
+    container_name: locust
+    volumes:
+      - ./locust/locustfile.py:/mnt/locustfile.py:ro
+    ports:
+      - "8089:8089"
+    env_file:
+      - ./.env
+    command: -f /mnt/locustfile.py --host http://backend:8000 --web-host 0.0.0.0 --web-port 8089
+    depends_on:
+      - backend
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./.env
+    depends_on:
+      - backend
+
+networks:
+  default:
+    driver: bridge
