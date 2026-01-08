@@ -4,7 +4,8 @@ RUN mkdir -p /etc/pgbouncer && chown -R postgres:postgres /etc/pgbouncer
 COPY pgbouncer.ini.template /etc/pgbouncer/pgbouncer.ini.template
 COPY userlist.txt.template /etc/pgbouncer/userlist.txt.template
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh && chown postgres:postgres /entrypoint.sh
+# Ensure Unix line endings and exec perms (fixes Windows CRLF issues)
+RUN sed -i 's/\r$//' /entrypoint.sh && chmod +x /entrypoint.sh && chown postgres:postgres /entrypoint.sh
 USER postgres
 EXPOSE 6432
 ENTRYPOINT ["/entrypoint.sh"]

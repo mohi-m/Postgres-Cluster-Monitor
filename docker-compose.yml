@@ -6,7 +6,7 @@ services:
     ports:
       - "6432:6432"
     env_file:
-      - ./.env
+      - .env
     volumes:
       - ./pgbouncer/pgbouncer.ini.template:/etc/pgbouncer/pgbouncer.ini.template:ro
       - ./pgbouncer/userlist.txt.template:/etc/pgbouncer/userlist.txt.template:ro
@@ -16,7 +16,7 @@ services:
       context: ./backend
     container_name: backend
     env_file:
-      - ./.env
+      - .env
     ports:
       - "8000:8000"
     depends_on:
@@ -30,7 +30,7 @@ services:
     ports:
       - "8089:8089"
     env_file:
-      - ./.env
+      - .env
     command: -f /mnt/locustfile.py --host http://backend:8000 --web-host 0.0.0.0 --web-port 8089
     depends_on:
       - backend
@@ -42,7 +42,7 @@ services:
     ports:
       - "5173:5173"
     env_file:
-      - ./.env
+      - .env
     depends_on:
       - backend
 
