@@ -30,17 +30,17 @@ This project targets a self-managed Postgres cluster deployed on Azure VMs (not 
                           (Self-managed Postgres)
                                    |
                                    ▼
-  ┌────────────────────────────────┬───────────────────────────────────────────────────────────────────┐
-  |   Azure Cloud                  |                                                                   |
-  |					   ┌───────────┴──────────────┬───────────────────────────────────┐                |
-  |					   │                          │                                   |                |
-  |					   │                          │                                   |                |
-  |					   │                          │                                   |                |
-  | ┌──────────────────┴────────────┐   ┌─────────┴──────────────────┐   ┌────────────┴─────────────┐  |
-  | │  Azure VM: Primary (RW)       │   │  Azure VM: Read Replica    │   │  Azure VM: Read Replica  │  |
-  | │  Postgres: bitcoin_write      │   │  Postgres: bitcoin_read_1  │   │  Postgres: bitcoin_read_2│  |
-  | └───────────────────────────────┘   └────────────────────────────┘   └──────────────────────────┘  |
-  └────────────────────────────────────────────────────────────────────────────────────────────────────┘
+  ┌────────────────────────────────┬─────────────────────────────────────────────────────────────────┐
+  |   Azure Cloud                  |                                                                 |
+  |					   ┌───────────┴─────────────┬──────────────────────────────────┐                |
+  |					   │                         │                                  |                |
+  |					   │                         │                                  |                |
+  |					   │                         │                                  |                |
+  | ┌──────────────────┴────────────┐  ┌─────────┴──────────────────┐  ┌────────────┴─────────────┐  |
+  | │  Azure VM: Primary (RW)       │  │  Azure VM: Read Replica    │  │  Azure VM: Read Replica  │  |
+  | │  Postgres: bitcoin_write      │  │  Postgres: bitcoin_read_1  │  │  Postgres: bitcoin_read_2│  |
+  | └───────────────────────────────┘  └────────────────────────────┘  └──────────────────────────┘  |
+  └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 Locust (8089) drives traffic to the backend for test runs.
 
@@ -74,6 +74,8 @@ Notes:
 **Deployment**
 
 [![Docker Compose](https://img.shields.io/badge/Docker%20Compose-2496ED?logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+[![Azure](https://img.shields.io/badge/Azure-%230078D4.svg?style=flat&logo=azure&logoColor=white)](https://portal.azure.com/)
+
 
 ## Getting Started
 
